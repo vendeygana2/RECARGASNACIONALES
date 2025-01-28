@@ -98,7 +98,7 @@
 <body onload="openModal()">
     <div class="overlay" id="overlay">
         <div class="venta">
-            <button class="close-button" onclick="window.location.href='https://www.vendeygana.net/user/'">X</button>
+            <button class="close-button" onclick="closeModal()">X</button>
             <div class="header-images">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Cantv_logo.PNG" alt="Cantv">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/6/6c/InterVE-Logo.png" alt="Inter">
@@ -118,6 +118,10 @@
     <script>
         function openModal() {
             document.getElementById('overlay').style.display = 'flex';
+        }
+
+        function closeModal() {
+            window.location.href = 'https://www.vendeygana.net/user/';
         }
     </script>
 </body>
