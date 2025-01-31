@@ -33,12 +33,6 @@
             text-align: center;
             position: relative;
         }
-        .venta p, .venta ul {
-            margin: 10px 0; /* Ajuste de margen para pegar más el texto al logo */
-            color: black; /* Texto en color negro */
-            font-size: 16px;
-            text-align: left; /* Alinear texto a la izquierda */
-        }
         .header-title {
             font-size: 18px;
             font-weight: bold;
@@ -47,36 +41,24 @@
         }
         .header-images {
             display: flex;
-            justify-content: space-around;
+            flex-direction: column; /* Botones uno debajo del otro */
+            gap: 10px; /* Espacio entre los botones */
+            margin-top: 20px; /* Separar más el título del encabezado de los botones */
             margin-bottom: 10px; /* Ajuste de margen inferior */
         }
-        .header-images img {
-            width: 30%; /* Ajuste del tamaño de las imágenes */
-            height: auto;
-        }
-        .botones {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 20px;
-        }
-        .boton {
-            background-color: #003366; /* Color del botón de recargar (azul oscuro) */
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
+        .header-images button {
+            background: white; /* Fondo blanco */
+            border: 2px solid #ed7318; /* Borde naranja */
+            border-radius: 5px; /* Bordes redondeados */
             cursor: pointer;
-            text-transform: uppercase;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
-        .boton-volver {
-            background-color: #ed7318; /* Color naranja */
-        }
-        .boton:hover {
-            background-color: #002244; /* Azul oscuro más oscuro */
-        }
-        .boton-volver:hover {
-            background-color: #d66616; /* Color naranja oscuro */
+        .header-images img {
+            width: 100px; /* Ajuste del tamaño de las imágenes */
+            height: auto;
         }
         .close-button {
             position: absolute;
@@ -93,24 +75,36 @@
             line-height: 25px;
             font-weight: bold;
         }
+        .titileo {
+            font-size: 20px;
+            font-weight: bold;
+            color: #ed7318; /* Color naranja */
+            animation: titileo 2s infinite; /* Animación de titileo */
+            font-family: sans-serif; /* Fuente sans-serif */
+        }
+        @keyframes titileo {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
     </style>
 </head>
 <body onload="openModal()">
     <div class="overlay" id="overlay">
         <div class="venta">
             <button class="close-button" onclick="closeModal()">X</button>
+            <!-- Texto titilante con el día de la semana -->
+            <div class="titileo" id="titileo">¿Qué vamos a recargar hoy <span id="dia"></span>?</div>
+            <!-- Botones con logos uno debajo del otro -->
             <div class="header-images">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Cantv_logo.PNG" alt="Cantv">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6c/InterVE-Logo.png" alt="Inter">
-                <img src="https://ss-static-001.esmsv.com/r/content/host1/70c4a4264df069cb64408433d4232bc1/img/NetUno-1.webp" alt="NetUno">
-            </div>
-            <div class="header-title">💡 <strong>RECARGA</strong> DE FORMA FÁCIL los servicios de Cantv Residencial 🏠, Cantv Empresarial 🏢, Cantv Satelital 📡, ABA Cantv 📶, ABA ULTRA 🔷, INTER 🌐 y Netuno con VENDE Y GANA 💡</div>
-            <p>📲 Compra tu <strong>recarga</strong> hoy y disfruta de una conexión sin interrupciones.</p>
-            <p>📌 CANTV: También puedes cancelar estos servicios de manera rápida y segura.</p>
-            <p>En VENDE Y GANA ES UN PLACER ATENDERTE.</p>
-            <div class="botones">
-                <button class="boton" onclick="window.location.href='https://dptodecomprasvg.company.site/products/TV-NACIONALES-p721818601'">Recargar</button>
-                <button class="boton boton-volver" onclick="window.location.href='https://www.vendeygana.net/user/'">Volver a Vende y Gana</button>
+                <button onclick="window.location.href='https://vendeygana2.github.io/RECARGACANTV/'">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Cantv_logo.PNG" alt="Cantv">
+                </button>
+                <button onclick="window.location.href='https://inter.com'">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6c/InterVE-Logo.png" alt="Inter">
+                </button>
+                <button onclick="window.location.href='https://netuno.com'">
+                    <img src="https://ss-static-001.esmsv.com/r/content/host1/70c4a4264df069cb64408433d4232bc1/img/NetUno-1.webp" alt="NetUno">
+                </button>
             </div>
         </div>
     </div>
@@ -118,6 +112,11 @@
     <script>
         function openModal() {
             document.getElementById('overlay').style.display = 'flex';
+            // Obtener el día de la semana
+            const diasSemana = ["DOMINGO", "LUNES", "MARTES", "MIÉRCOLES", "JUEVES", "VIERNES", "SÁBADO"];
+            const fecha = new Date();
+            const diaSemana = diasSemana[fecha.getDay()];
+            document.getElementById('dia').textContent = diaSemana;
         }
 
         function closeModal() {
