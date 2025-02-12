@@ -42,23 +42,46 @@
         .header-images {
             display: flex;
             flex-direction: column; /* Botones uno debajo del otro */
-            gap: 10px; /* Espacio entre los botones */
+            align-items: center; /* Centrar los botones horizontalmente */
+            gap: 15px; /* Espacio entre los botones */
             margin-top: 20px; /* Separar más el título del encabezado de los botones */
             margin-bottom: 10px; /* Ajuste de margen inferior */
+            position: relative;
+            overflow: hidden; /* Evitar que las ondas se desborden */
         }
         .header-images button {
             background: white; /* Fondo blanco */
-            border: 2px solid #ed7318; /* Borde naranja */
-            border-radius: 5px; /* Bordes redondeados */
+            border: 3px solid #ed7318; /* Borde naranja más grueso */
+            border-radius: 10px; /* Bordes redondeados */
             cursor: pointer;
-            padding: 10px;
+            width: 250px; /* Ancho fijo para todos los botones */
+            height: 60px; /* Alto fijo para todos los botones */
             display: flex;
-            justify-content: center;
             align-items: center;
+            justify-content: center; /* Centrar el logo */
+            padding: 0; /* Eliminar el padding */
+            position: relative; /* Para el efecto de ondas */
+            overflow: hidden; /* Ocultar las ondas fuera del botón */
         }
-        .header-images img {
-            width: 100px; /* Ajuste del tamaño de las imágenes */
-            height: auto;
+        .header-images button img {
+            width: auto; /* Ajustar el ancho de la imagen automáticamente */
+            height: 40px; /* Altura fija para las imágenes */
+        }
+        .header-images .ripple {
+            position: absolute;
+            width: 100px; /* Tamaño inicial de las ondas */
+            height: 100px;
+            background: rgba(0, 0, 0, 0.3); /* Color negro con transparencia */
+            border-radius: 50%; /* Hacer las ondas circulares */
+            animation: ripple-animation 0.6s linear; /* Animación de las ondas */
+            transform: scale(0); /* Comenzar desde tamaño cero */
+            pointer-events: none; /* Evitar que las ondas interfieran con los clics */
+        }
+        @keyframes ripple-animation {
+            to {
+                transform: scale(4); /* Aumentar el tamaño de las ondas */
+                opacity: 0; /* Hacer las ondas transparentes al final */
+            }
         }
         .close-button {
             position: absolute;
@@ -96,13 +119,17 @@
             <div class="titileo" id="titileo">¿Qué vamos a recargar hoy <span id="dia"></span>?</div>
             <!-- Botones con logos uno debajo del otro -->
             <div class="header-images">
-                <button onclick="window.location.href='https://vendeygana2.github.io/RECARGACANTV/'">
+                <!-- Botón con el logo de SimpleTV -->
+                <button onclick="window.location.href='https://vendeygana2.github.io/RECARGASIMPLETV/'" onclick="createRipple(event)">
+                    <img src="https://www.simple.com.ve/wp-content/uploads/2023/12/simpletv-logo-1.svg" alt="SimpleTV">
+                </button>
+                <button onclick="window.location.href='https://vendeygana2.github.io/RECARGACANTV/'" onclick="createRipple(event)">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Cantv_logo.PNG" alt="Cantv">
                 </button>
-                <button onclick="window.location.href='https://vendeygana2.github.io/recargainter1/'">
+                <button onclick="window.location.href='https://vendeygana2.github.io/recargainter1/'" onclick="createRipple(event)">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/6/6c/InterVE-Logo.png" alt="Inter">
                 </button>
-                <button onclick="window.location.href='https://netuno.com'">
+                <button onclick="window.location.href='https://netuno.com'" onclick="createRipple(event)">
                     <img src="https://ss-static-001.esmsv.com/r/content/host1/70c4a4264df069cb64408433d4232bc1/img/NetUno-1.webp" alt="NetUno">
                 </button>
             </div>
@@ -122,6 +149,26 @@
         function closeModal() {
             window.location.href = 'https://www.vendeygana.net/user/';
         }
+
+        function createRipple(event) {
+            const button = event.currentTarget;
+            const ripple = document.createElement('span');
+            ripple.classList.add('ripple');
+            const rect = button.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            ripple.style.width = ripple.style.height = `${size}px`;
+            ripple.style.left = `${event.clientX - rect.left - size / 2}px`;
+            ripple.style.top = `${event.clientY - rect.top - size / 2}px`;
+            button.appendChild(ripple);
+            ripple.addEventListener('animationend', () => {
+                ripple.remove();
+            });
+        }
+
+        // Asignar el evento de clic a los botones
+        document.querySelectorAll('.header-images button').forEach(button => {
+            button.addEventListener('click', createRipple);
+        });
     </script>
 </body>
 </html>
