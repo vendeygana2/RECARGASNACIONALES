@@ -29,58 +29,59 @@
             border-radius: 15px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             padding: 20px;
-            max-width: 600px; /* Ajuste del tamaño de la venta */
+            max-width: 600px;
             text-align: center;
             position: relative;
         }
         .header-title {
             font-size: 18px;
             font-weight: bold;
-            color: black; /* Texto en color negro */
-            margin-top: 10px; /* Ajuste de margen superior */
+            color: black;
+            margin-top: 10px;
         }
         .header-images {
             display: flex;
-            flex-direction: column; /* Botones uno debajo del otro */
-            align-items: center; /* Centrar los botones horizontalmente */
-            gap: 15px; /* Espacio entre los botones */
-            margin-top: 20px; /* Separar más el título del encabezado de los botones */
-            margin-bottom: 10px; /* Ajuste de margen inferior */
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin-top: 20px;
+            margin-bottom: 10px;
             position: relative;
-            overflow: hidden; /* Evitar que las ondas se desborden */
+            overflow: hidden;
         }
         .header-images button {
-            background: white; /* Fondo blanco */
-            border: 3px solid #ed7318; /* Borde naranja más grueso */
-            border-radius: 10px; /* Bordes redondeados */
+            background: white;
+            border: 3px solid #ed7318;
+            border-radius: 10px;
             cursor: pointer;
-            width: 250px; /* Ancho fijo para todos los botones */
-            height: 60px; /* Alto fijo para todos los botones */
+            width: 250px;
+            height: 60px;
             display: flex;
             align-items: center;
-            justify-content: center; /* Centrar el logo */
-            padding: 0; /* Eliminar el padding */
-            position: relative; /* Para el efecto de ondas */
-            overflow: hidden; /* Ocultar las ondas fuera del botón */
+            justify-content: center;
+            padding: 0;
+            position: relative;
+            overflow: hidden;
         }
         .header-images button img {
-            width: auto; /* Ajustar el ancho de la imagen automáticamente */
-            height: 40px; /* Altura fija para las imágenes */
+            width: auto;
+            height: 40px;
+            margin-right: 10px; /* Espacio entre la imagen y el texto */
         }
         .header-images .ripple {
             position: absolute;
-            width: 100px; /* Tamaño inicial de las ondas */
+            width: 100px;
             height: 100px;
-            background: rgba(0, 0, 0, 0.3); /* Color negro con transparencia */
-            border-radius: 50%; /* Hacer las ondas circulares */
-            animation: ripple-animation 0.6s linear; /* Animación de las ondas */
-            transform: scale(0); /* Comenzar desde tamaño cero */
-            pointer-events: none; /* Evitar que las ondas interfieran con los clics */
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 50%;
+            animation: ripple-animation 0.6s linear;
+            transform: scale(0);
+            pointer-events: none;
         }
         @keyframes ripple-animation {
             to {
-                transform: scale(4); /* Aumentar el tamaño de las ondas */
-                opacity: 0; /* Hacer las ondas transparentes al final */
+                transform: scale(4);
+                opacity: 0;
             }
         }
         .close-button {
@@ -101,9 +102,9 @@
         .titileo {
             font-size: 20px;
             font-weight: bold;
-            color: #ed7318; /* Color naranja */
-            animation: titileo 2s infinite; /* Animación de titileo */
-            font-family: sans-serif; /* Fuente sans-serif */
+            color: #ed7318;
+            animation: titileo 2s infinite;
+            font-family: sans-serif;
         }
         @keyframes titileo {
             0%, 100% { opacity: 1; }
@@ -115,36 +116,37 @@
     <div class="overlay" id="overlay">
         <div class="venta">
             <button class="close-button" onclick="closeModal()">X</button>
-            <!-- Texto titilante con el día de la semana -->
-            <div class="titileo" id="titileo">¿Qué vamos a recargar hoy <span id="dia"></span>?</div>
-            <!-- Botones con logos uno debajo del otro -->
+            <div class="titileo" id="titileo">¿Qué servicio pagaremos hoy <span id="dia"></span>?</div>
             <div class="header-images">
-                <!-- Botón con el logo de Cantv -->
                 <button onclick="window.location.href='https://vendeygana2.github.io/RECARGACANTV/'" onclick="createRipple(event)">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Cantv_logo.PNG" alt="Cantv">
                 </button>
-                <!-- Botón con el logo de Inter -->
                 <button onclick="window.location.href='https://vendeygana2.github.io/recargainter1/'" onclick="createRipple(event)">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/6/6c/InterVE-Logo.png" alt="Inter">
+                </button>
+                <!-- Botón de Corpoelec con redirección al formulario -->
+                <button onclick="window.location.href='https://fluidforms.co/embed/form?id=67d8272fb8d437712941898d'" onclick="createRipple(event)">
+                    <img src="https://ntn-consultores.com/wp-content/uploads/2018/05/NTN-Consultores-Corpoelec-logo-e1525390898646.png" alt="Corpoelec">
+                </button>
+                <!-- Botón de Pago de Agua con imagen y texto -->
+                <button onclick="window.location.href='https://fluidforms.co/embed/form?id=67d8272fb8d437712941898d'" onclick="createRipple(event)">
+                    <img src="https://e7.pngegg.com/pngimages/221/337/png-clipart-water-drop-computer-icons-agua-triangle-logo-thumbnail.png" alt="Agua">
+                    Pago Servicio de Agua
                 </button>
             </div>
         </div>
     </div>
-
     <script>
         function openModal() {
             document.getElementById('overlay').style.display = 'flex';
-            // Obtener el día de la semana
             const diasSemana = ["DOMINGO", "LUNES", "MARTES", "MIÉRCOLES", "JUEVES", "VIERNES", "SÁBADO"];
             const fecha = new Date();
             const diaSemana = diasSemana[fecha.getDay()];
             document.getElementById('dia').textContent = diaSemana;
         }
-
         function closeModal() {
             window.location.href = 'https://www.vendeygana.net/user/';
         }
-
         function createRipple(event) {
             const button = event.currentTarget;
             const ripple = document.createElement('span');
@@ -159,8 +161,6 @@
                 ripple.remove();
             });
         }
-
-        // Asignar el evento de clic a los botones
         document.querySelectorAll('.header-images button').forEach(button => {
             button.addEventListener('click', createRipple);
         });
