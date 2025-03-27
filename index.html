@@ -210,7 +210,7 @@
                 <button onclick="window.location.href='https://online.forms.app/respuestasdereportesdefa/pagocorpoelec'" onclick="createRipple(event)">
                     <img src="https://ntn-consultores.com/wp-content/uploads/2018/05/NTN-Consultores-Corpoelec-logo-e1525390898646.png" alt="Corpoelec">
                 </button>
-                <button onclick="window.location.href='https://fluidforms.co/embed/form?id=67d8272fb8d437712941898d'" onclick="createRipple(event)">
+                <button onclick="loadWaterForm()" onclick="createRipple(event)">
                     <img src="https://e7.pngegg.com/pngimages/221/337/png-clipart-water-drop-computer-icons-agua-triangle-logo-thumbnail.png" alt="Agua">
                     Pago Servicio de Agua
                 </button>
@@ -268,6 +268,28 @@
         
         function closeCalcModal() {
             document.getElementById('calcModal').style.display = 'none';
+        }
+        
+        function loadWaterForm() {
+            // Cargar el script del formulario de agua con los nuevos parámetros
+            const script = document.createElement('script');
+            script.src = 'https://forms.app/static/embed.js';
+            script.type = 'text/javascript';
+            script.async = true;
+            script.defer = true;
+            script.onload = function() {
+                new formsapp('67e5714f6f35064016063af4', 'popup', {
+                    'overlay': 'rgba(45,45,45,0.37)',
+                    'width': '1200px',
+                    'height': '800px',
+                    'autoOpen': {'action': 'onpageload'},
+                    'openingAnimation': {
+                        'entrance': 'animate__fadeIn',
+                        'exit': 'animate__fadeOut'
+                    }
+                }, 'https://96vxnn73.forms.app');
+            };
+            document.body.appendChild(script);
         }
         
         document.querySelectorAll('.header-images button').forEach(button => {
