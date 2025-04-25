@@ -194,12 +194,11 @@
     </style>
 </head>
 <body onload="openModal()">
-    <!-- Ventana principal -->
     <div class="overlay" id="overlay">
         <div class="venta">
             <button class="close-button" onclick="closeModal()">X</button>
             <div class="titileo" id="titileo">¿Qué servicio pagaremos hoy <span id="dia"></span>?</div>
-            <div class="descuento-nota">DESCUENTO NO APLICA A INTER</div>
+            <div class="descuento-nota">DESCUENTO DEL 8% NO APLICA A INTER NI NETUNO</div>
             <div class="header-images">
                 <button onclick="window.location.href='https://vendeygana2.github.io/RECARGACANTV/'" onclick="createRipple(event)">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Cantv_logo.PNG" alt="Cantv">
@@ -214,7 +213,9 @@
                     <img src="https://e7.pngegg.com/pngimages/221/337/png-clipart-water-drop-computer-icons-agua-triangle-logo-thumbnail.png" alt="Agua">
                     Pago Servicio de Agua
                 </button>
-                <!-- Botón de Cálculo de Descuento - NEGRO OPACO -->
+                <button onclick="window.location.href='https://online.forms.app/respuestasdereportesdefa/netuno'" onclick="createRipple(event)">
+                    <img src="https://internetenmizona.com/wp-content/uploads/2022/10/NetUno-Modificado-1.png" alt="Netuno">
+                </button>
                 <button class="calc-button" onclick="openCalcModal()">
                     CÁLCULO DE DESCUENTO
                 </button>
@@ -222,7 +223,6 @@
         </div>
     </div>
 
-    <!-- Ventana emergente para el cálculo -->
     <div class="modal-calc" id="calcModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -241,11 +241,11 @@
             const diaSemana = diasSemana[fecha.getDay()];
             document.getElementById('dia').textContent = diaSemana;
         }
-        
+
         function closeModal() {
             window.location.href = 'https://www.vendeygana.net/user/';
         }
-        
+
         function createRipple(event) {
             const button = event.currentTarget;
             const ripple = document.createElement('span');
@@ -260,16 +260,16 @@
                 ripple.remove();
             });
         }
-        
+
         function openCalcModal() {
             document.getElementById('calcModal').style.display = 'flex';
             document.getElementById('calcIframe').src = document.getElementById('calcIframe').src;
         }
-        
+
         function closeCalcModal() {
             document.getElementById('calcModal').style.display = 'none';
         }
-        
+
         function loadWaterForm() {
             // Cargar el script del formulario de agua con los nuevos parámetros
             const script = document.createElement('script');
@@ -291,7 +291,7 @@
             };
             document.body.appendChild(script);
         }
-        
+
         document.querySelectorAll('.header-images button').forEach(button => {
             button.addEventListener('click', createRipple);
         });
