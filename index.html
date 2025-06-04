@@ -191,6 +191,47 @@
             border: none;
             border-radius: 5px;
         }
+        /* Modal de mantenimiento */
+        .maintenance-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 3000;
+        }
+        .maintenance-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 400px;
+            text-align: center;
+        }
+        .maintenance-gif {
+            width: 200px;
+            height: auto;
+            margin: 15px 0;
+        }
+        .maintenance-title {
+            font-size: 20px;
+            color: red;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .maintenance-close {
+            background: #ed7318;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 15px;
+            margin-top: 15px;
+            cursor: pointer;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body onload="openModal()">
@@ -200,16 +241,16 @@
             <div class="titileo" id="titileo">¿Qué servicio pagaremos hoy <span id="dia"></span>?</div>
             <div class="descuento-nota">DESCUENTO DEL 8% NO APLICA A INTER NI NETUNO</div>
             <div class="header-images">
-                <button onclick="window.location.href='https://vendeygana2.github.io/RECARGACANTV/'" onclick="createRipple(event)">
+                <button onclick="showMaintenance('CANTV')" onclick="createRipple(event)">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Cantv_logo.PNG" alt="Cantv">
                 </button>
                 <button onclick="window.location.href='https://vendeygana2.github.io/recargainter1/'" onclick="createRipple(event)">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/6/6c/InterVE-Logo.png" alt="Inter">
                 </button>
-                <button onclick="window.location.href='https://online.forms.app/respuestasdereportesdefa/pagocorpoelec'" onclick="createRipple(event)">
+                <button onclick="showMaintenance('CORPOELEC')" onclick="createRipple(event)">
                     <img src="https://ntn-consultores.com/wp-content/uploads/2018/05/NTN-Consultores-Corpoelec-logo-e1525390898646.png" alt="Corpoelec">
                 </button>
-                <button onclick="loadWaterForm()" onclick="createRipple(event)">
+                <button onclick="showMaintenance('AGUA')" onclick="createRipple(event)">
                     <img src="https://e7.pngegg.com/pngimages/221/337/png-clipart-water-drop-computer-icons-agua-triangle-logo-thumbnail.png" alt="Agua">
                     Pago Servicio de Agua
                 </button>
@@ -223,6 +264,7 @@
         </div>
     </div>
 
+    <!-- Modal de cálculo -->
     <div class="modal-calc" id="calcModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -230,6 +272,17 @@
                 <button class="modal-close" onclick="closeCalcModal()">X</button>
             </div>
             <iframe src="https://vendeygana2.github.io/calculoserviciioscliente/" class="modal-iframe" id="calcIframe"></iframe>
+        </div>
+    </div>
+
+    <!-- Modal de mantenimiento -->
+    <div class="maintenance-modal" id="maintenanceModal">
+        <div class="maintenance-content">
+            <div class="maintenance-title">SERVICIO EN MANTENIMIENTO</div>
+            <img src="https://i.gifer.com/origin/b4/b4d657e7ef262b88eb5f7ac021edda87.gif" class="maintenance-gif" alt="Mantenimiento">
+            <p>Lo sentimos, el servicio de <span id="serviceName"></span> se encuentra en mantenimiento.</p>
+            <p>Por favor, intente nuevamente más tarde.</p>
+            <button class="maintenance-close" onclick="closeMaintenanceModal()">ENTENDIDO</button>
         </div>
     </div>
 
@@ -268,6 +321,15 @@
 
         function closeCalcModal() {
             document.getElementById('calcModal').style.display = 'none';
+        }
+
+        function showMaintenance(service) {
+            document.getElementById('serviceName').textContent = service;
+            document.getElementById('maintenanceModal').style.display = 'flex';
+        }
+
+        function closeMaintenanceModal() {
+            document.getElementById('maintenanceModal').style.display = 'none';
         }
 
         function loadWaterForm() {
