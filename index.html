@@ -191,8 +191,29 @@
             border: none;
             border-radius: 5px;
         }
-        /* Modal de mantenimiento */
-        .maintenance-modal {
+        /* Mensaje de descuento */
+        .discount-message {
+            background-color: #f8f8f8;
+            border: 2px solid #ed7318;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            font-size: 16px;
+            color: #333;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+        .highlight {
+            color: #ed7318;
+            font-size: 18px;
+        }
+        /* Modal de servicios (Corpoelec, CANTV, Agua) */
+        .service-modal {
             position: fixed;
             top: 0;
             left: 0;
@@ -202,35 +223,43 @@
             display: none;
             justify-content: center;
             align-items: center;
-            z-index: 3000;
+            z-index: 2000;
         }
-        .maintenance-content {
+        .service-content {
             background: white;
             padding: 20px;
             border-radius: 10px;
-            max-width: 400px;
-            text-align: center;
+            width: 90%;
+            max-width: 800px;
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
         }
-        .maintenance-gif {
-            width: 200px;
-            height: auto;
-            margin: 15px 0;
+        .service-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
         }
-        .maintenance-title {
-            font-size: 20px;
-            color: red;
+        .service-title {
+            font-size: 18px;
             font-weight: bold;
-            margin-bottom: 10px;
+            color: #ED7318;
         }
-        .maintenance-close {
-            background: #ed7318;
+        .service-close {
+            background: red;
             color: white;
             border: none;
-            border-radius: 5px;
-            padding: 8px 15px;
-            margin-top: 15px;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            font-size: 16px;
             cursor: pointer;
-            font-weight: bold;
+        }
+        .service-iframe {
+            flex-grow: 1;
+            border: none;
+            border-radius: 5px;
         }
     </style>
 </head>
@@ -240,24 +269,31 @@
             <button class="close-button" onclick="closeModal()">X</button>
             <div class="titileo" id="titileo">¿Qué servicio pagaremos hoy <span id="dia"></span>?</div>
             <div class="descuento-nota">DESCUENTO DEL 8% NO APLICA A INTER NI NETUNO</div>
+            
+            <div class="discount-message">
+                <span class="highlight">¡CADA BOLÍVAR CUENTA!</span><br>
+                AHORA EN SERVICIOS COMO <span class="highlight">AGUA, LUZ Y TELEFÓNICA CANTV</span><br>
+                UN <span class="highlight">8% DE DESCUENTO</span> SOBRE EL MONTO DE LA FACTURA A PAGAR
+            </div>
+            
             <div class="header-images">
-                <button onclick="showMaintenance('CANTV')" onclick="createRipple(event)">
+                <button onclick="openCantvModal(); createRipple(event)">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Cantv_logo.PNG" alt="Cantv">
                 </button>
-                <button onclick="window.location.href='https://vendeygana2.github.io/recargainter1/'" onclick="createRipple(event)">
+                <button onclick="window.location.href='https://vendeygana2.github.io/recargainter1/'; createRipple(event)">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/6/6c/InterVE-Logo.png" alt="Inter">
                 </button>
-                <button onclick="showMaintenance('CORPOELEC')" onclick="createRipple(event)">
+                <button onclick="openCorpoelecModal(); createRipple(event)">
                     <img src="https://ntn-consultores.com/wp-content/uploads/2018/05/NTN-Consultores-Corpoelec-logo-e1525390898646.png" alt="Corpoelec">
                 </button>
-                <button onclick="showMaintenance('AGUA')" onclick="createRipple(event)">
+                <button onclick="openAguaModal(); createRipple(event)">
                     <img src="https://e7.pngegg.com/pngimages/221/337/png-clipart-water-drop-computer-icons-agua-triangle-logo-thumbnail.png" alt="Agua">
                     Pago Servicio de Agua
                 </button>
-                <button onclick="window.location.href='https://online.forms.app/respuestasdereportesdefa/netuno'" onclick="createRipple(event)">
+                <button onclick="window.location.href='https://online.forms.app/respuestasdereportesdefa/netuno'; createRipple(event)">
                     <img src="https://internetenmizona.com/wp-content/uploads/2022/10/NetUno-Modificado-1.png" alt="Netuno">
                 </button>
-                <button class="calc-button" onclick="openCalcModal()">
+                <button class="calc-button" onclick="openCalcModal(); createRipple(event)">
                     CÁLCULO DE DESCUENTO
                 </button>
             </div>
@@ -275,14 +311,36 @@
         </div>
     </div>
 
-    <!-- Modal de mantenimiento -->
-    <div class="maintenance-modal" id="maintenanceModal">
-        <div class="maintenance-content">
-            <div class="maintenance-title">SERVICIO EN MANTENIMIENTO</div>
-            <img src="https://i.gifer.com/origin/b4/b4d657e7ef262b88eb5f7ac021edda87.gif" class="maintenance-gif" alt="Mantenimiento">
-            <p>Lo sentimos, el servicio de <span id="serviceName"></span> se encuentra en mantenimiento.</p>
-            <p>Por favor, intente nuevamente más tarde.</p>
-            <button class="maintenance-close" onclick="closeMaintenanceModal()">ENTENDIDO</button>
+    <!-- Modal de CANTV -->
+    <div class="service-modal" id="cantvModal">
+        <div class="service-content">
+            <div class="service-header">
+                <div class="service-title">PAGO DE CANTV</div>
+                <button class="service-close" onclick="closeCantvModal()">X</button>
+            </div>
+            <iframe src="https://vendeygana.forms.app/pagocantv" class="service-iframe" id="cantvIframe"></iframe>
+        </div>
+    </div>
+
+    <!-- Modal de Corpoelec -->
+    <div class="service-modal" id="corpoelecModal">
+        <div class="service-content">
+            <div class="service-header">
+                <div class="service-title">PAGO DE CORPOELEC</div>
+                <button class="service-close" onclick="closeCorpoelecModal()">X</button>
+            </div>
+            <iframe src="https://vendeygana.forms.app/pagocorpoelec" class="service-iframe" id="corpoelecIframe"></iframe>
+        </div>
+    </div>
+
+    <!-- Modal de Agua -->
+    <div class="service-modal" id="aguaModal">
+        <div class="service-content">
+            <div class="service-header">
+                <div class="service-title">PAGO DE SERVICIO DE AGUA</div>
+                <button class="service-close" onclick="closeAguaModal()">X</button>
+            </div>
+            <iframe src="https://vendeygana.forms.app/pagoagua" class="service-iframe" id="aguaIframe"></iframe>
         </div>
     </div>
 
@@ -300,6 +358,7 @@
         }
 
         function createRipple(event) {
+            event.preventDefault();
             const button = event.currentTarget;
             const ripple = document.createElement('span');
             ripple.classList.add('ripple');
@@ -323,35 +382,31 @@
             document.getElementById('calcModal').style.display = 'none';
         }
 
-        function showMaintenance(service) {
-            document.getElementById('serviceName').textContent = service;
-            document.getElementById('maintenanceModal').style.display = 'flex';
+        function openCantvModal() {
+            document.getElementById('cantvModal').style.display = 'flex';
+            document.getElementById('cantvIframe').src = 'https://vendeygana.forms.app/pagocantv';
         }
 
-        function closeMaintenanceModal() {
-            document.getElementById('maintenanceModal').style.display = 'none';
+        function closeCantvModal() {
+            document.getElementById('cantvModal').style.display = 'none';
         }
 
-        function loadWaterForm() {
-            // Cargar el script del formulario de agua con los nuevos parámetros
-            const script = document.createElement('script');
-            script.src = 'https://forms.app/static/embed.js';
-            script.type = 'text/javascript';
-            script.async = true;
-            script.defer = true;
-            script.onload = function() {
-                new formsapp('67e5714f6f35064016063af4', 'popup', {
-                    'overlay': 'rgba(45,45,45,0.37)',
-                    'width': '1200px',
-                    'height': '800px',
-                    'autoOpen': {'action': 'onpageload'},
-                    'openingAnimation': {
-                        'entrance': 'animate__fadeIn',
-                        'exit': 'animate__fadeOut'
-                    }
-                }, 'https://96vxnn73.forms.app');
-            };
-            document.body.appendChild(script);
+        function openCorpoelecModal() {
+            document.getElementById('corpoelecModal').style.display = 'flex';
+            document.getElementById('corpoelecIframe').src = 'https://vendeygana.forms.app/pagocorpoelec';
+        }
+
+        function closeCorpoelecModal() {
+            document.getElementById('corpoelecModal').style.display = 'none';
+        }
+
+        function openAguaModal() {
+            document.getElementById('aguaModal').style.display = 'flex';
+            document.getElementById('aguaIframe').src = 'https://vendeygana.forms.app/pagoagua';
+        }
+
+        function closeAguaModal() {
+            document.getElementById('aguaModal').style.display = 'none';
         }
 
         document.querySelectorAll('.header-images button').forEach(button => {
